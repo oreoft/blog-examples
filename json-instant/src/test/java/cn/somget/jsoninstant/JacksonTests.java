@@ -1,11 +1,8 @@
 package cn.somget.jsoninstant;
 
 import cn.somget.jsoninstant.entity.TimeDTO;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.time.Instant;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
@@ -14,44 +11,7 @@ import org.junit.jupiter.api.Test;
  * 这里主要是测试各个JSON序列化工具instant的兼容性情况
  * @author oreoft
  */
-class FastJsonTests {
-
-  /**
-   * 固定Instant实例
-   */
-  private final Instant instant = Instant.now();
-
-  /**
-   * jackson的类全局使用
-   */
-  private final ObjectMapper objectMapper = new ObjectMapper();
-
-
-  /**
-   * FastJSON, 序列化Instant
-   * FastJSON, 反序列化(解析)Instant
-
-   result:
-   {
-   "instant":"2021-10-30T08:00:03.210Z",
-   "name":"fastJson测试"
-   }
-   TimeDTO(name=fastJson测试, instant=2021-10-30T08:00:03.210Z)
-   */
-  @Test
-  void allFastJsonTest() {
-    TimeDTO timeDTO = TimeDTO.builder().
-        name("fastJson测试").
-        instant(instant).build();
-    // fastjson序列化(序列化好看一点, 然后打印出来)
-    String json = JSON.toJSONString(timeDTO, SerializerFeature.PrettyFormat);
-    System.out.println(json);
-
-    // 然后在使用fastjson反序列化
-    TimeDTO obj = JSON.parseObject(json, TimeDTO.class);
-    System.out.println(obj);
-  }
-
+class JacksonTests extends MixTests {
 
   /**
    * 不注册java8模块的jackson, 序列化Instant
@@ -145,7 +105,6 @@ class FastJsonTests {
     // 然后再使用重新创建一个jackson反序列化(和这个是没有注册java8时间模块的)
     TimeDTO obj = new ObjectMapper().readValue(json, TimeDTO.class);
     System.out.println(obj);
-
   }
 
   /**

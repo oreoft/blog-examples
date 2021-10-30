@@ -14,17 +14,17 @@ import org.junit.jupiter.api.Test;
  * 这里主要是测试各个JSON序列化工具instant的兼容性情况
  * @author oreoft
  */
-class JacksonTests {
+class MixTests {
 
   /**
    * 固定Instant实例
    */
-  private final Instant instant = Instant.now();
+  protected final Instant instant = Instant.now();
 
   /**
    * jackson的类全局使用
    */
-  private final ObjectMapper objectMapper = new ObjectMapper();
+  protected final ObjectMapper objectMapper = new ObjectMapper();
 
 
   /**

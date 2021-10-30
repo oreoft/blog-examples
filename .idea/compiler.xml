@@ -3,11 +3,11 @@
   <component name="CompilerConfiguration">
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2048" />
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="blog-examples" />
         <module name="json-instant" />
       </profile>
     </annotationProcessing>
@@ -15,7 +15,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="json-instant" options="" />
+      <module name="blog-examples" options="-parameters" />
+      <module name="json-instant" options="-parameters" />
     </option>
   </component>
 </project>
