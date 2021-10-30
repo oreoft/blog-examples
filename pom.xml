@@ -8,13 +8,15 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.5.6</version>
+    <version>2.3.4.RELEASE</version>
     <relativePath/>
   </parent>
 
   <modules>
     <!-- json序列化Install -->
     <module>json-instant</module>
+    <!-- openfeign类型擦除 -->
+    <module>openfeign-type-erasure</module>
   </modules>
 
   <packaging>pom</packaging>
@@ -27,48 +29,63 @@
   <properties>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
+    <springboot.version>2.3.4.RELEASE</springboot.version>
+    <spring-cloud.version>Hoxton.SR10</spring-cloud.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+    <!-- cloud依赖进行版本管理 -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-dependencies</artifactId>
+      <version>${spring-cloud.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
 
 
   <!-- 我所有项目里面都会使用到的依赖(轮子重度爱好者) -->
-  <dependencies>
-    <!-- springboot相关 -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-    </dependency>
+<dependencies>
+<!-- springboot相关 -->
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter</artifactId>
+</dependency>
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-test</artifactId>
+</dependency>
 
-    <!-- huTool YYDS -->
-    <dependency>
-      <groupId>cn.hutool</groupId>
-      <artifactId>hutool-all</artifactId>
-      <version>5.7.15</version>
-    </dependency>
+<!-- huTool YYDS -->
+<dependency>
+  <groupId>cn.hutool</groupId>
+  <artifactId>hutool-all</artifactId>
+  <version>5.7.15</version>
+</dependency>
 
-    <!-- vavr functional coding -->
-    <dependency>
-      <groupId>io.vavr</groupId>
-      <artifactId>vavr</artifactId>
-      <version>0.10.4</version>
-    </dependency>
+<!-- vavr functional coding -->
+<dependency>
+  <groupId>io.vavr</groupId>
+  <artifactId>vavr</artifactId>
+  <version>0.10.4</version>
+</dependency>
 
-    <!-- 好用而又有争议的json序列化工具 -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>1.2.78</version>
-    </dependency>
+<!-- 好用而又有争议的json序列化工具 -->
+<dependency>
+  <groupId>com.alibaba</groupId>
+  <artifactId>fastjson</artifactId>
+  <version>1.2.78</version>
+</dependency>
 
-    <!-- 天天被公众号dis, 但是谁用谁爽的轮子糖 -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.22</version>
-    </dependency>
-  </dependencies>
+<!-- 天天被公众号dis, 但是谁用谁爽的轮子糖 -->
+<dependency>
+  <groupId>org.projectlombok</groupId>
+  <artifactId>lombok</artifactId>
+  <version>1.18.22</version>
+</dependency>
+</dependencies>
 
-</project>
+  </project>
