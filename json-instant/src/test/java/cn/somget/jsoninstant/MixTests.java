@@ -28,102 +28,75 @@ class MixTests {
 
 
   /**
-   * FastJSON, 序列化Instant
-   * FastJSON, 反序列化(解析)Instant
-
+   * 使用没用注册java8时间模块的jackson进行序列化
+   * 使用fastjson进行反序列化
+   *
    result:
    {
-   "instant":"2021-10-30T08:00:03.210Z",
-   "name":"fastJson测试"
+   "name" : "jackson不注册java8时间模块序列化, 然后用FastJson反序列化",
+   "instant" : {
+   "epochSecond" : 1635610701,
+   "nano" : 940000000
+      }
    }
-   TimeDTO(name=fastJson测试, instant=2021-10-30T08:00:03.210Z)
+   TimeDTO(name=jackson不注册java8时间模块序列化, 然后用FastJson反序列化, instant=2021-10-30T16:18:21.940Z)
    */
   @Test
-  void allFastJsonTest() {
+  @SneakyThrows
+  void JackSonWithNonJava8ToFastJSON() {
     TimeDTO timeDTO = TimeDTO.builder().
-        name("fastJson测试").
+        name("jackson不注册java8时间模块序列化, 然后用FastJson反序列化").
         instant(instant).build();
-    // fastjson序列化(序列化好看一点, 然后打印出来)
-    String json = JSON.toJSONString(timeDTO, SerializerFeature.PrettyFormat);
+
+    // 用没用注册java8时间模块的jackson序列化
+    String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(timeDTO);
     System.out.println(json);
 
-    // 然后在使用fastjson反序列化
+    // 用fastjson直接反序列化
+    TimeDTO obj = JSON.parseObject(json, TimeDTO.class);
+    System.out.println(obj);
+  }
+
+  /**
+   * 使用注册java8时间模块的jackson进行序列化
+   * 使用fastjson进行反序列化
+   *
+   result:
+   {
+   "name" : "jackson注册java8时间模块序列化, 然后用FastJson反序列化",
+   "instant" : 1635610909.898000000
+   }
+
+   todo 可以使用自定义反序列化器对其配置, 详情请释放实体类上注解
+   Caused by: java.lang.UnsupportedOperationException
+   at com.alibaba.fastjson.parser.deserializer.Jdk8DateCodec.deserialze
+   */
+  @Test
+  @SneakyThrows
+  void JackSonWithJava8ToFastJSON() {
+    TimeDTO timeDTO = TimeDTO.builder().
+        name("jackson注册java8时间模块序列化, 然后用FastJson反序列化").
+        instant(instant).build();
+
+    // 用注册java8时间模块的jackson序列化
+    objectMapper.registerModule(new JavaTimeModule());
+    String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(timeDTO);
+    System.out.println(json);
+
+    // 用fastjson直接反序列化
     TimeDTO obj = JSON.parseObject(json, TimeDTO.class);
     System.out.println(obj);
   }
 
 
   /**
-   * 不注册java8模块的jackson, 序列化Instant
-   * 不注册java8模块的jackson, 反序列化(解析)Instant
-
-   result:
-
-   {
-   "name" : "jackson不注册java8时间模块序列化",
-   "instant" : {
-   "epochSecond" : 1635582033,
-   "nano" : 590000000
-      }
-   }
-   com.fasterxml.jackson.databind.exc.InvalidDefinitionException:
-   Cannot construct instance of `java.time.Instant` (no Creators, like default constructor, exist)
-   */
-  @Test
-  @SneakyThrows
-  void allJacksonWithNonJava8Test() {
-    TimeDTO timeDTO = TimeDTO.builder().
-        name("jackson不注册java8时间模块序列化").
-        instant(instant).build();
-
-    // jackson序列化(序列化好看一点, 然后打印出来)
-    String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(timeDTO);
-    System.out.println(json);
-
-    // 然后再使用jackson反序列化
-    TimeDTO obj = objectMapper.readValue(json, TimeDTO.class);
-    System.out.println(obj);
-  }
-
-
-  /**
-   * 注册java8模块的jackson, 序列化Instant
-   * 注册java8模块的jackson, 反序列化(解析)Instant
-
+   * 使用fastjson进行序列化
+   * 使用没用注册java8时间模块的jackson进行反序列化
+   *
    result:
    {
-   "name" : "jackson注册java8时间模块序列化",
-   "instant" : 1635582344.024000000
-   }
-   TimeDTO(name=jackson注册java8时间模块序列化, instant=2021-10-30T08:25:44.024Z)
-   */
-  @Test
-  @SneakyThrows
-  void allJacksonWithJava8Test() {
-    TimeDTO timeDTO = TimeDTO.builder().
-        name("jackson注册java8时间模块序列化").
-        instant(instant).build();
-
-    // 给全局变量的objectMapper注册一下java8时间模块
-    objectMapper.registerModule(new JavaTimeModule());
-    // jackson序列化(序列化好看一点, 然后打印出来)
-    String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(timeDTO);
-    System.out.println(json);
-
-    // 然后再使用jackson反序列化
-    TimeDTO obj = objectMapper.readValue(json, TimeDTO.class);
-    System.out.println(obj);
-  }
-
-
-  /**
-   * 注册java8模块的jackson, 序列化Instant
-   * 没有注册java8模块的jackson, 反序列化(解析)Instant
-
-   result:
-   {
-   "name" : "jackson注册java8时间模块序列化, 然后用没有注册java8时间模块的jackson反序列化",
-   "instant" : 1635582847.359000000
+   "instant":"2021-10-30T16:27:11.054Z",
+   "name":"使用FastJson序列化, 然后使用没用注册java8时间模块的jackson反序列化"
    }
 
    com.fasterxml.jackson.databind.exc.InvalidDefinitionException:
@@ -131,53 +104,45 @@ class MixTests {
    */
   @Test
   @SneakyThrows
-  void JacksonWithJava8ToJacksonWithNonJava8Test() {
+  void FastJSONToJackSonWithNonJava8() {
     TimeDTO timeDTO = TimeDTO.builder().
-        name("jackson注册java8时间模块序列化, 然后用没有注册java8时间模块的jackson反序列化").
+        name("使用FastJson序列化, 然后使用没用注册java8时间模块的jackson反序列化").
         instant(instant).build();
 
-    // 给全局变量的objectMapper注册一下java8时间模块
-    objectMapper.registerModule(new JavaTimeModule());
-    // jackson序列化(序列化好看一点, 然后打印出来)
-    String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(timeDTO);
+    // 使用FastJson进行序列化
+    String json = JSON.toJSONString(timeDTO, SerializerFeature.PrettyFormat);
     System.out.println(json);
 
-    // 然后再使用重新创建一个jackson反序列化(和这个是没有注册java8时间模块的)
-    TimeDTO obj = new ObjectMapper().readValue(json, TimeDTO.class);
+    // 使用没用注册java8时间模块的jackson反序列化
+    TimeDTO obj = objectMapper.readValue(json, TimeDTO.class);
     System.out.println(obj);
-
   }
 
-  /**
-   * 没有注册java8模块的jackson, 序列化Instant
-   * 注册java8模块的jackson, 反序列化(解析)Instant
 
+  /**
+   * 使用fastjson进行序列化
+   * 使用注册java8时间模块的jackson进行反序列化
+   *
    result:
    {
-   "name" : "jackson注册java8时间模块序列化, 然后用没有注册java8时间模块的jackson反序列化",
-   "instant" : {
-   "epochSecond" : 1635583012,
-   "nano" : 867000000
-      }
+   "instant":"2021-10-30T16:30:07.833Z",
+   "name":"使用FastJson序列化, 然后使用注册java8时间模块的jackson反序列化"
    }
-
-   java.lang.NoSuchMethodError:
-   com.fasterxml.jackson.databind.DeserializationContext.extractScalarFromObject
+   TimeDTO(name=使用FastJson序列化, 然后使用注册java8时间模块的jackson反序列化, instant=2021-10-30T16:30:07.833Z)
    */
   @Test
   @SneakyThrows
-  void JacksonNonWithJava8ToJacksonWithJava8Test() {
+  void FastJSONToJackSonWithJava8() {
     TimeDTO timeDTO = TimeDTO.builder().
-        name("jackson注册java8时间模块序列化, 然后用没有注册java8时间模块的jackson反序列化").
+        name("使用FastJson序列化, 然后使用注册java8时间模块的jackson反序列化").
         instant(instant).build();
 
-    // 用不注册java8时间模块的jackson序列化(序列化好看一点, 然后打印出来)
-    String json = objectMapper.writer().withDefaultPrettyPrinter().writeValueAsString(timeDTO);
+    // 使用FastJson进行序列化
+    String json = JSON.toJSONString(timeDTO, SerializerFeature.PrettyFormat);
     System.out.println(json);
 
-    // 然后给全局变量的objectMapper注册一下java8时间模块
+    // 使用注册java8时间模块的jackson反序列化
     objectMapper.registerModule(new JavaTimeModule());
-    // 然后再jackson反序列化(现在已经注册java8时间模块的)
     TimeDTO obj = objectMapper.readValue(json, TimeDTO.class);
     System.out.println(obj);
   }

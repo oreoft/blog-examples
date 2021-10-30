@@ -23,7 +23,9 @@ public class TimeDTO {
 
   /**
    * 重点测试字段
+   * todo 这个注解注释, 给你测xxx.xxx解析的时候使用
    */
+//  @JSONField(deserializeUsing = InstantDeserialize.class)
   private Instant instant;
 
 }

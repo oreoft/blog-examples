@@ -1,0 +1,30 @@
+### FastJson序列化以后的结果(ac)
+POST http://localhost:8080/test
+Content-Type: application/json
+
+{"name":"FastJson序列化以后的结果","instant":"2021-10-30T16:59:29.896Z"}
+
+
+
+### Jackson没注册时间模块序列化以后的结果(error)
+### (java.lang.IllegalArgumentException: The HTTP header line [{*}] does not conform to RFC 7230 and has been ignored.)
+POST http://localhost:8080/test
+Content-Type: application/json
+
+{"name":"Jackson没注册时间模块序列化以后的结果","instant":{"epochSecond":1635613169,"nano":896000000}}
+
+
+
+### Jackson注册了时间模块序列化以后的结果(ac)
+POST http://localhost:8080/test
+Content-Type: application/json
+
+{"name":"Jackson注册了时间模块序列化以后的结果","instant":1635613169.896000000}
+
+
+
+### HuTools工具序列化以后的结果(ac)
+POST http://localhost:8080/test
+Content-Type: application/json
+
+{"name":"HuTools工具序列化以后的结果","instant":1635613169896}
