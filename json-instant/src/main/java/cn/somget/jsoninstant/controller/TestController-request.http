@@ -23,7 +23,7 @@ Content-Type: application/json
 
 
 
-### HuTools工具序列化以后的结果(ac)
+### HuTools工具序列化以后的结果(ac, 但是结果是错误的, 错把毫秒当成秒)
 POST http://localhost:8080/test
 Content-Type: application/json
 
