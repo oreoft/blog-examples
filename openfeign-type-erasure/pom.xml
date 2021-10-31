@@ -10,8 +10,10 @@
   </parent>
 
   <modules>
-    <module>service-1</module>
-    <module>service-2</module>
+    <module>service-business</module>
+    <module>service-db</module>
+    <module>base-domain</module>
+    <module>middle-eureka</module>
   </modules>
 
   <packaging>pom</packaging>
@@ -25,6 +27,18 @@
     <java.version>1.8</java.version>
   </properties>
 
+  <!-- 父层定义版本 -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>cn.someget</groupId>
+        <artifactId>base-domain</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- 公共依赖 -->
   <dependencies>
     <dependency>
       <groupId>org.springframework.cloud</groupId>

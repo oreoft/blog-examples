@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: service-data
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      # 服务注册的URL
+      defaultZone: http://localhost:8080/eureka/
