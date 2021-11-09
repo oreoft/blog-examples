@@ -6,7 +6,6 @@ import cn.someget.domain.constant.ServiceNameConstants;
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,40 +22,21 @@ public interface SaveDbFeignService {
 
 
   /**
-   * 获取一个学生数据
-   *
+   * 接受一个学生数据, 然后返回
+   * @param bo 一个学生的bo
    * @return 一个学生的bo
    */
-  @GetMapping("/student")
-  ResponseEntity<StudentBO> fetchStudent();
+  @PostMapping("/student")
+  ResponseEntity<StudentBO> returnStudent(@RequestBody StudentBO bo);
 
 
   /**
-   * 获取一堆学生的数据
-   *
+   * 接受一堆学生的数据 然后返回
+   * @param list 一堆学生的boList
    * @return 一堆学生的bo
    */
-  @GetMapping("/studentList")
-  ResponseEntity<List<StudentBO>> fetchStudentList();
-
-  /**
-   * 保存一个学生的数据
-   *
-   * @param studentBO 一个学生的bo
-   * @return 无
-   */
-  @PostMapping("/student")
-  ResponseEntity<?> saveStudent(@RequestBody StudentBO studentBO);
-
-
-  /**
-   * 保存一堆学生的数据
-   *
-   * @param studentBOList 一个学生的bo
-   * @return 无
-   */
   @PostMapping("/studentList")
-  ResponseEntity<?> saveStudentList(@RequestBody List<StudentBO> studentBOList);
+  ResponseEntity<List<StudentBO>> returnStudentList(@RequestBody List<StudentBO> list);
 
 
   /*   --------------------------------- 上面是正常业务场景  -------------------------------------   */
@@ -65,40 +45,22 @@ public interface SaveDbFeignService {
 
 
   /**
-   * 获取一个bo数据
-   *
+   * 接受一个不确定泛型bo数据 然后返回
+   * @param bo 不确定泛型bo数据
    * @return 一个bo
    */
-  @GetMapping("/data")
-  <T extends BaseBO> ResponseEntity<T> fetchData();
+  @PostMapping("/generic")
+  <T extends BaseBO> ResponseEntity<T> returnGeneric(@RequestBody T bo);
 
 
   /**
-   * 获取一堆bo的数据
+   * 接受一堆不确定泛型bo的数据 然后返回
    *
-   * @return 一堆bo
-   */
-  @GetMapping("/dataList")
-  <T extends BaseBO> ResponseEntity<List<T>> fetchDataList();
-
-  /**
-   * 保存一个bo的数据
-   *
-   * @param bo 一个bo
+   * @param list 一群bo
    * @return 无
    */
-  @PostMapping("/data")
-  <T extends BaseBO> ResponseEntity<?> saveData(@RequestBody T bo);
-
-
-  /**
-   * 保存一堆bo的数据
-   *
-   * @param studentBOList 一个bo
-   * @return 无
-   */
-  @PostMapping("/dataList")
-  <T extends BaseBO> ResponseEntity<?> saveDataList(@RequestBody List<T> studentBOList);
+  @PostMapping("/genericList")
+  <T extends BaseBO> ResponseEntity<List<T>> returnGenericList(@RequestBody List<T> list);
 
 
 }
