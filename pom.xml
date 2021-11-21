@@ -17,6 +17,7 @@
     <module>json-instant</module>
     <!-- openfeign类型擦除 -->
     <module>openfeign-type-erasure</module>
+    <module>java8-vavr</module>
   </modules>
 
   <packaging>pom</packaging>
