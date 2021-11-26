@@ -18,6 +18,7 @@
     <!-- openfeign类型擦除 -->
     <module>openfeign-type-erasure</module>
     <module>java8-vavr</module>
+    <module>interview-design1125</module>
   </modules>
 
   <packaging>pom</packaging>
