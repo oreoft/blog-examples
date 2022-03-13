@@ -1,6 +1,5 @@
 package cn.somget.jsoninstant;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -12,9 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JsonInstantApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(JsonInstantApplication.class, args);
-  }
-  
+    public static void main(String[] args) {
+        SpringApplication.run(JsonInstantApplication.class, args);
+    }
+
 
 }

@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-  /**
-   * 接口测试样例请看同包下.http文件
-   * @param timeDTO 测试实体类
-   * @return 测试返回数据
-   */
-  @PostMapping("/test")
-  public ResponseEntity<TimeDTO> parameterBindingTest(@RequestBody TimeDTO timeDTO) {
-    return ResponseEntity.ok(timeDTO);
-  }
+    /**
+     * 接口测试样例请看同包下.http文件
+     * @param timeDTO 测试实体类
+     * @return 测试返回数据
+     */
+    @PostMapping("/test")
+    public ResponseEntity<TimeDTO> parameterBindingTest(@RequestBody TimeDTO timeDTO) {
+        return ResponseEntity.ok(timeDTO);
+    }
 
 }

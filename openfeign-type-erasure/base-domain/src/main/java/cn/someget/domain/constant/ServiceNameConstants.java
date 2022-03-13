@@ -8,14 +8,14 @@ package cn.someget.domain.constant;
  */
 public interface ServiceNameConstants {
 
-  /**
-   * service服务1的注册名
-   */
-  String SERVICE_BUSINESS = "SERVICE-BUSINESS";
+    /**
+     * service服务1的注册名
+     */
+    String SERVICE_BUSINESS = "SERVICE-BUSINESS";
 
-  /**
-   * service服务2的注册名
-   */
-  String SERVICE_DATA = "SERVICE-DATA";
+    /**
+     * service服务2的注册名
+     */
+    String SERVICE_DATA = "SERVICE-DATA";
 
 }

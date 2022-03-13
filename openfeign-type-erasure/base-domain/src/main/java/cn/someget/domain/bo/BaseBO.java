@@ -15,14 +15,14 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class BaseBO {
 
-  /**
-   * pk
-   */
-  private Long id;
+    /**
+     * pk
+     */
+    private Long id;
 
-  /**
-   * name
-   */
-  private String name;
+    /**
+     * name
+     */
+    private String name;
 
 }
